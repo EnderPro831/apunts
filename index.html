@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Els apunts de'n Nadal</title>
+    <link rel="stylesheet" href="bg.css"> <!-- Enllaç al fitxer bg.css -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Centrat vertical */
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 32px;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .container {
+            display: none; /* Ocultem el contingut principal fins que s'introdueixi la contrasenya */
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .subject-button {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 18px;
+            margin: 15px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            width: 250px;
+        }
+
+        .subject-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+
+        .dropdown {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 110%;
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .subject-button:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown a {
+            display: block;
+            text-decoration: none;
+            color: #ffffff;
+            padding: 15px;
+            transition: background-color 0.2s ease;
+            font-size: 16px;
+        }
+
+        .dropdown a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #passwordModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000; /* Fons sòlid negre */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #passwordModal.hidden {
+            display: none; /* Ocultem completament el panell */
+        }
+
+        #passwordModal .modal-content {
+            background: #1e1e1e;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #passwordModal input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ffffff;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        #passwordModal button {
+            padding: 10px 20px;
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #passwordModal button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        audio {
+            display: none;
+        }
+    </style>
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('password').value.trim(); // Obté el valor del camp de contrasenya
+            if (password === 'yourpassword') {
+                document.getElementById('passwordModal').classList.add('hidden'); // Oculta el modal
+                document.querySelector('.container').style.display = 'flex'; // Mostra el contingut principal
+                document.getElementById('welcomeAudio').play(); // Reprodueix l'àudio
+            } else {
+                alert('Incorrect password'); // Mostra un avís si la contrasenya és incorrecta
+            }
+        }
+
+        window.onload = function() {
+            // Permet prémer "Enter" per enviar la contrasenya
+            const passwordInput = document.getElementById('password');
+            passwordInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+    <div id="passwordModal">
+        <div class="modal-content">
+            <h2>Introduir contrasenya</h2>
+            <input type="password" id="password" placeholder="Contrasenya">
+            <button onclick="checkPassword()">Entrar</button>
+            <p id="error-message" style="color: red; margin-top: 10px;"></p> <!-- Missatge d'error -->
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('password').value.trim(); // Obté el valor del camp de contrasenya
+            const errorMessage = document.getElementById('error-message'); // Obté el missatge d'error
+            if (password === '1234') {
+                document.getElementById('passwordModal').classList.add('hidden'); // Oculta el modal
+                document.querySelector('.container').style.display = 'flex'; // Mostra el contingut principal
+                document.getElementById('welcomeAudio').play(); // Reprodueix l'àudio
+                errorMessage.textContent = ''; // Buida el missatge d'error
+            } else {
+                errorMessage.textContent = 'Contrasenya incorrecta. La contrasenya és al servidor de Discord.'; // Mostra el missatge d'error
+            }
+        }
+    
+        window.onload = function() {
+            // Permet prémer "Enter" per enviar la contrasenya
+            const passwordInput = document.getElementById('password');
+            passwordInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+        };
+    </script>
+    
+
+    <header>
+        <h1>Els apunts de'n Nadal</h1>
+    </header>
+
+    <div class="container">
+        <button class="subject-button">
+            Català
+            <div class="dropdown">
+                <a href="https://example.com/algebra" target="_blank">PROPERAMENT</a>
+                <a href="https://example.com/geometry" target="_blank">PROPERAMENT</a>
+                <a href="https://example.com/calculus" target="_blank">PROPERAMENT</a>
+            </div>
+        </button>
+        <button class="subject-button">
+            Castellà
+            <div class="dropdown">
+                <a href="https://www.canva.com/design/DAGYQYfeito/bwCMjsn_xJJ1PPVBf-B41w/view?utm_content=DAGYQYfeito&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hdac14933ca" target="_blank">Literatura Castellana [U9/10]</a>
+                <a href="https://www.canva.com/design/DAGc25NlS0E/WE5lPI_6dcACR0b3PCjPNw/view?utm_content=DAGc25NlS0E&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6b5df78f10" target="_blank">Lit: Novela Renacentista</a>
+            </div>
+        </button>
+        <button class="subject-button">
+            Filosofia
+            <div class="dropdown">
+                <a href="https://example.com/ancient" target="_blank">PROPERAMENT</a>
+                <a href="https://example.com/medieval" target="_blank">PROPERAMENT</a>
+                <a href="https://example.com/modern" target="_blank">PROPERAMENT</a>
+            </div>
+        </button>
+    </div>
+
+    <audio id="welcomeAudio" src="https://www.myinstants.com/media/sounds/ding-sound-effect_1_CVUaI0C.mp3"></audio>
+</body>
+</html>
